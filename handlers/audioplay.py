@@ -67,7 +67,7 @@ async def stream(_, message: Message):
         position = await queues.put(message.chat.id, file=file_path)
         await message.reply_photo(
             photo=f"{QUE_IMG}",
-            caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {costumer}",
+            caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **:** {title[:50]}\n⏱ **:** `{duration}`\n🎧 **:** {costumer}",
             reply_markup=keyboard,
         )
         return await lel.delete()
@@ -75,8 +75,8 @@ async def stream(_, message: Message):
         callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
         await message.reply_photo(
             photo=f"{AUD_IMG}",
-            caption=f"🏷 **Name:** {title[:50]}\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
-                   +f"🎧 **Request by:** {costumer}",
+            caption=f"🏷 **:** {title[:50]}\n⏱ **:** `{duration}`\n💡 **:** `Playing`\n" \
+                   +f"🎧 **:** {costumer}",
             reply_markup=keyboard,
         )
         return await lel.delete()
