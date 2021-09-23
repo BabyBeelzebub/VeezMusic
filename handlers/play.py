@@ -41,7 +41,7 @@ def cb_admin_check(func: Callable) -> Callable:
         if cb.from_user.id in admemes:
             return await func(client, cb)
         else:
-            await cb.answer("💡 only admin can tap this button !", show_alert=True)
+            await cb.answer("💡 Lu siapa?", show_alert=True)
             return
     return decorator                                                                       
                                           
@@ -185,7 +185,7 @@ async def settings(client, message):
         else:
             await message.reply(stats, reply_markup=r_ply("play"))
     else:
-        await message.reply("😕 **voice chat not found**\n\n» please turn on the voice chat first")
+        await message.reply("😕 **Ga ada OS**\n\n» Makanya idupin dulu OS")
 
 
 @Client.on_message(
@@ -469,7 +469,7 @@ async def play(_, message: Message):
         # lmoa = await client.get_chat_member(chid,wew)
     except:
         await lel.edit(
-            f"<i>{user.first_name} was banned in this group, ask admin to unban @{ASSISTANT_NAME} manually.</i>"
+            f"<i>{user.first_name} Ko gw di ban? @{ASSISTANT_NAME} manually.</i>"
         )
         return
     text_links=None
@@ -501,14 +501,11 @@ async def play(_, message: Message):
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
             raise DurationLimitError(
-                f"❌ **music with duration more than** `{DURATION_LIMIT}` **minutes, can't play !**"
+                f"❌ **Kelamaan Download pake kuota gw** `{DURATION_LIMIT}` **Gw batesin segitu !**"
             )
         keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🖱 ᴍᴇɴᴜ", callback_data="menu"),
-                    InlineKeyboardButton("🗑 ᴄʟᴏsᴇ", callback_data="cls"),
-                ],[
                     InlineKeyboardButton("📣 ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/{UPDATES_CHANNEL}")
                 ],
             ]
@@ -544,7 +541,7 @@ async def play(_, message: Message):
             views = results[0]["views"]
         except Exception as e:
             await lel.edit(
-                "😕 **couldn't find song you requested**\n\n» **please provide the correct song name or include the artist's name as well**"
+                "😕 **Lagu jamet**\n\n» **Kaya lu jamet hahaha.. cari yg laen**"
             )
             print(str(e))
             return
@@ -553,9 +550,6 @@ async def play(_, message: Message):
         keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🖱 ᴍᴇɴᴜ", callback_data="menu"),
-                    InlineKeyboardButton("🗑 ᴄʟᴏsᴇ", callback_data="cls"),
-                ],[
                     InlineKeyboardButton("📣 ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/{UPDATES_CHANNEL}")
                 ],
             ]
@@ -573,7 +567,7 @@ async def play(_, message: Message):
         try:
           results = YoutubeSearch(query, max_results=5).to_dict()
         except:
-          await lel.edit("😕 **song name not detected**\n\n» **please provide the name of the song you want to play**")
+          await lel.edit("😕 **Lagu jamet**\n\n» **Kaya lu jamet hahaha.. cari yg laen**")
         # veez project
         try:
             toxxt = "\n"
@@ -582,8 +576,7 @@ async def play(_, message: Message):
             emojilist = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣"]
             while j < 5:
                 toxxt += f"{emojilist[j]} [{results[j]['title'][:35]}](https://youtube.com{results[j]['url_suffix']})\n"
-                toxxt += f" ├ 💡 **Duration** - {results[j]['duration']}\n"
-                toxxt += f" └ ⚡ __Powered by {BOT_NAME} A.I__\n\n"
+                toxxt += f" ├ ⏱ - {results[j]['duration']}\n"
                 j += 1            
             keyboard = InlineKeyboardMarkup(
                 [
@@ -625,7 +618,7 @@ async def play(_, message: Message):
                 views = results[0]["views"]
             except Exception as e:
                 await lel.edit(
-                    "😕 **couldn't find song you requested**\n\n» **please provide the correct song name or include the artist's name as well**"
+                    "😕 **Lagu jamet**\n\n» **Kaya lu jamet hahaha.. cari yg laen**"
                 )
                 print(str(e))
                 return
@@ -634,9 +627,7 @@ async def play(_, message: Message):
             keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🖱 ᴍᴇɴᴜ", callback_data="menu"),
-                    InlineKeyboardButton("🗑 ᴄʟᴏsᴇ", callback_data="cls"),
-                ],[
+
                     InlineKeyboardButton("📣 ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/{UPDATES_CHANNEL}")
                 ],
             ]
@@ -655,7 +646,7 @@ async def play(_, message: Message):
         qeue.append(appendable)
         await message.reply_photo(
             photo="final.png",
-            caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** [{title[:50]}]({url})\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {message.from_user.mention}",
+            caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **:** [{title[:50]}]({url})\n⏱ **:** `{duration}`\n🎧 **:** {message.from_user.mention}",
             reply_markup=keyboard
         )
     else:
@@ -670,12 +661,12 @@ async def play(_, message: Message):
         try:
             callsmusic.pytgcalls.join_group_call(chat_id, file_path)
         except:
-            message.reply("😕 **voice chat not found**\n\n» please turn on the voice chat first")
+            message.reply("😕 **Ga ada OS**\n\n» Makanya idupin dulu OS")
             return
         await message.reply_photo(
             photo="final.png",
-            caption=f"🏷 **Name:** [{title[:50]}]({url})\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
-                   +f"🎧 **Request by:** {message.from_user.mention}",
+            caption=f"🏷 **:** [{title[:50]}]({url})\n⏱ **:** `{duration}`\n💡 **Status:** `Playing`\n" \
+                   +f"🎧 **:** {message.from_user.mention}",
             reply_markup=keyboard
         )
         os.remove("final.png")
@@ -691,7 +682,7 @@ async def lol_cb(b, cb):
     try:
         x,query,useer_id = typed_.split("|")      
     except:
-        await cb.message.edit("😕 **couldn't find song you requested**\n\n» **please provide the correct song name or include the artist's name as well**")
+        await cb.message.edit("😕 **Lagu jamet**\n\n» **Kaya lu jamet hahaha.. cari yg laen**")
         return
     useer_id = int(useer_id)
     if cb.from_user.id != useer_id:
@@ -716,7 +707,7 @@ async def lol_cb(b, cb):
             dur += (int(dur_arr[i]) * secmul)
             secmul *= 60
         if (dur / 60) > DURATION_LIMIT:
-             await cb.message.edit(f"❌ **music with duration more than** `{DURATION_LIMIT}` **minutes, can't play !**")
+             await cb.message.edit(f"❌ **Kelamaan anj ...Download pake kuota gw** `{DURATION_LIMIT}` **Gw batesin segitu !**")
              return
     except:
         pass
@@ -732,9 +723,6 @@ async def lol_cb(b, cb):
     keyboard = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("🖱 ᴍᴇɴᴜ", callback_data="menu"),
-                    InlineKeyboardButton("🗑 ᴄʟᴏsᴇ", callback_data="cls"),
-                ],[
                     InlineKeyboardButton("📣 ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/{UPDATES_CHANNEL}")
                 ],
             ]
@@ -757,7 +745,7 @@ async def lol_cb(b, cb):
         await b.send_photo(
         chat_id,
         photo="final.png",
-        caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** [{title[:50]}]({url})\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {r_by.mention}",
+        caption=f"💡 **Track added to queue »** `{position}`\n\n🏷 **:** [{title[:50]}]({url})\n⏱ **:** `{duration}`\n🎧 **:** {r_by.mention}",
         reply_markup=keyboard,
         )
         if path.exists("final.png"):
@@ -778,8 +766,8 @@ async def lol_cb(b, cb):
         await b.send_photo(
         chat_id,
         photo="final.png",
-        caption=f"🏷 **Name:** [{title[:50]}]({url})\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
-               +f"🎧 **Request by:** {r_by.mention}",
+        caption=f"🏷 **:** [{title[:50]}]({url})\n⏱ **:** `{duration}`\n💡 **:** `Playing`\n" \
+               +f"🎧 **:** {r_by.mention}",
         reply_markup=keyboard,
         )
         if path.exists("final.png"):
@@ -871,7 +859,7 @@ async def ytplay(_, message: Message):
 
     except Exception as e:
         await lel.edit(
-            "😕 **couldn't find song you requested**\n\n» **please provide the correct song name or include the artist's name as well**"
+            "😕 **Lagu jamet**\n\n» **Kaya lu jamet hahaha.. cari yg laen**"
         )
         print(str(e))
         return
@@ -880,9 +868,6 @@ async def ytplay(_, message: Message):
     keyboard = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton("🖱 ᴍᴇɴᴜ", callback_data="menu"),
-                InlineKeyboardButton("🗑 ᴄʟᴏsᴇ", callback_data="cls"),
-            ],[
                 InlineKeyboardButton("📣 ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/{UPDATES_CHANNEL}"),
                 InlineKeyboardButton("✨ ɢʀᴏᴜᴘ", url=f"https://t.me/{GROUP_SUPPORT}")
             ],
@@ -902,7 +887,7 @@ async def ytplay(_, message: Message):
         qeue.append(appendable)
         await message.reply_photo(
             photo="final.png",
-            caption = f"💡 **Track added to queue »** `{position}`\n\n🏷 **Name:** [{title[:50]}]({url})\n⏱ **Duration:** `{duration}`\n🎧 **Request by:** {message.from_user.mention}",
+            caption = f"💡 **Track added to queue »** `{position}`\n\n🏷 **:** [{title[:50]}]({url})\n⏱ **:** `{duration}`\n🎧 **:** {message.from_user.mention}",
             reply_markup=keyboard,
         )
         os.remove("final.png")
@@ -919,12 +904,12 @@ async def ytplay(_, message: Message):
         try:
             callsmusic.pytgcalls.join_group_call(chat_id, file_path)
         except:
-            message.reply("😕 **voice chat not found**\n\n» please turn on the voice chat first")
+            message.reply("😕 **Ga ada OS**\n\n» Makanya idupin dulu OS")
             return
         await message.reply_photo(
             photo="final.png",
-            caption = f"🏷 **Name:** [{title[:50]}]({url})\n⏱ **Duration:** `{duration}`\n💡 **Status:** `Playing`\n" \
-                    + f"🎧 **Request by:** {message.from_user.mention}",
+            caption = f"🏷 **:** [{title[:50]}]({url})\n⏱ **:** `{duration}`\n💡 **:** `Playing`\n" \
+                    + f"🎧 **:** {message.from_user.mention}",
                    reply_markup=keyboard,)
         os.remove("final.png")
         return await lel.delete()
